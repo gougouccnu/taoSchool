@@ -1,11 +1,8 @@
 package com.hankkin.compustrading.activity;
 
 import android.content.Intent;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -20,8 +17,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 
 public class SplasActivity extends BaseActivity {
 
@@ -33,6 +32,10 @@ public class SplasActivity extends BaseActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //透明导航栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
+        Bmob.initialize(this, "e2d5b2bea1b178fd75764aadadbba7d0");
+        categoryInit();
+        productInit();
         long size = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "compustrading" +"/app-release.apk").length();
         new Thread(new Runnable() {
             @Override
@@ -94,6 +97,44 @@ public class SplasActivity extends BaseActivity {
             @Override
             public void onError(int i, String s) {
                 HankkinUtils.showToast(SplasActivity.this, s);
+            }
+        });
+
+
+    }
+
+    /**
+     * category init
+     */
+    private void categoryInit(){
+        Category categoryObj = new Category(1,"name1", "desc1",1);
+        categoryObj.save(this, new SaveListener() {
+            @Override
+            public void onSuccess() {
+                HankkinUtils.showLToast(SplasActivity.this, "category init ok");
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                HankkinUtils.showLToast(SplasActivity.this, s);
+            }
+        });
+    }
+    /**
+     * product init
+     */
+    private void productInit(){
+        Product productObj = new Product(0, "product0", "10", "produc desc", "18926418053",
+                0);
+        productObj.save(this, new SaveListener() {
+            @Override
+            public void onSuccess() {
+                HankkinUtils.showLToast(SplasActivity.this, "product init ok");
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                HankkinUtils.showLToast(SplasActivity.this, s);
             }
         });
     }

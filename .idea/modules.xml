@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CompusTrading.iml" filepath="$PROJECT_DIR$/CompusTrading.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/taoSchool.iml" filepath="$PROJECT_DIR$/taoSchool.iml" />
     </modules>
   </component>
 </project>
