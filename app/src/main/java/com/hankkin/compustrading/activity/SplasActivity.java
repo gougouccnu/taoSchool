@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -34,8 +35,8 @@ public class SplasActivity extends BaseActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         Bmob.initialize(this, "e2d5b2bea1b178fd75764aadadbba7d0");
-        categoryInit();
-        productInit();
+        //categoryInit();
+        //productInit();
         long size = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "compustrading" +"/app-release.apk").length();
         new Thread(new Runnable() {
             @Override
@@ -91,6 +92,9 @@ public class SplasActivity extends BaseActivity {
                     intent.putExtras(bundle);
                     startActivity(intent);
                     finish();
+                } else { //构造category初始数据
+                    categoryInit();
+                    productInit();
                 }
             }
 
@@ -107,11 +111,16 @@ public class SplasActivity extends BaseActivity {
      * category init
      */
     private void categoryInit(){
-        Category categoryObj = new Category(1,"name1", "desc1",1);
-        categoryObj.save(this, new SaveListener() {
+        List<BmobObject> categorys = new ArrayList<BmobObject>();
+        categorys.add(new Category(0, "手机数码", "手机数码", 0));
+        categorys.add(new Category(1, "书籍", "书籍", 1));
+        categorys.add(new Category(2, "运动", "运动", 2));
+        categorys.add(new Category(3, "生活", "生活", 3));
+        categorys.add(new Category(4, "其他", "其他", 4));
+        new BmobObject().insertBatch(this, categorys, new SaveListener() {
             @Override
             public void onSuccess() {
-                HankkinUtils.showLToast(SplasActivity.this, "category init ok");
+                HankkinUtils.showLToast(SplasActivity.this, "category bath init ok");
             }
 
             @Override
@@ -124,8 +133,7 @@ public class SplasActivity extends BaseActivity {
      * product init
      */
     private void productInit(){
-        Product productObj = new Product(0, "product0", "10", "produc desc", "18926418053",
-                0);
+        Product productObj = new Product(0,"手机","999", "八成新小米4转让", "18926418053",0);
         productObj.save(this, new SaveListener() {
             @Override
             public void onSuccess() {

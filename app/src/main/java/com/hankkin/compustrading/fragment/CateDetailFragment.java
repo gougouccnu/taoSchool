@@ -46,7 +46,7 @@ public class CateDetailFragment extends Fragment implements SwipeRefreshLayout.O
     private ProductAdapter adapter;
     private FloatingActionsMenu fab;
 
-
+    //可优化，从数据库里面查询cid的product数据
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

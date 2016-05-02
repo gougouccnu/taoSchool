@@ -123,6 +123,7 @@ public class MainShowActivity extends BaseActivity {
                         Bundle bundle = new Bundle();
                         bundle.putInt("cid", categories.get(i).getId());
                         bundle.putSerializable("products", (Serializable) msg.obj);
+                        // 保存fragment的cid和products
                         fragment.setArguments(bundle);
                         fragments.add(fragment);
                     }
@@ -281,15 +282,18 @@ public class MainShowActivity extends BaseActivity {
     }
 
 
-
-
+    /**
+     * 一次把所有product数据都取出来？
+     */
     private void queryProductsHttp() {
         BmobQuery<Product> productBmobQuery = new BmobQuery<>();
         productBmobQuery.order("-createdAt");
+        productBmobQuery.setLimit(500);
         productBmobQuery.findObjects(this, new FindListener<Product>() {
             @Override
             public void onSuccess(List<Product> list) {
                 if (list != null && list.size() > 0) {
+                    // javabean collect
                     List<Product> data = new ArrayList<Product>();
                     for (Product p : list) {
                         data.add(p);
