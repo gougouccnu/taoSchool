@@ -1,11 +1,9 @@
 package com.hankkin.compustrading.activity;
 
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,14 +13,18 @@ import android.widget.TextView;
 import com.hankkin.compustrading.R;
 import com.hankkin.compustrading.Utils.HankkinUtils;
 import com.hankkin.compustrading.model.Product;
-import com.hankkin.compustrading.view.CollapsingAvatarToolbar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class ProdectDetailActivity extends AppCompatActivity {
+import me.imid.swipebacklayout.lib.SwipeBackLayout;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
+public class ProdectDetailActivity extends SwipeBackActivity {
 
     private Product product;
     private TextView tvDesc,tvProName,tvTime,tvSchool,tvPrice;
     private ImageView ivPro;
+
+    private SwipeBackLayout mSwipeBackActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,9 @@ public class ProdectDetailActivity extends AppCompatActivity {
         tvTime = (TextView) findViewById(R.id.tv_time);
         tvSchool = (TextView) findViewById(R.id.tv_school);
         tvPrice = (TextView) findViewById(R.id.tv_price);
+
+        mSwipeBackActivity = getSwipeBackLayout();
+        mSwipeBackActivity.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
 
         //透明状态栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

@@ -35,8 +35,6 @@ public class SplasActivity extends BaseActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         Bmob.initialize(this, "e2d5b2bea1b178fd75764aadadbba7d0");
-        //categoryInit();
-        //productInit();
         long size = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "compustrading" +"/app-release.apk").length();
         new Thread(new Runnable() {
             @Override

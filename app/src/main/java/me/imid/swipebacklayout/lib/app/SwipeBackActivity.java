@@ -2,7 +2,6 @@
 package me.imid.swipebacklayout.lib.app;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -19,6 +18,12 @@ public class SwipeBackActivity extends AppCompatActivity implements SwipeBackAct
         mHelper.onActivityCreate();
     }
 
+    /**
+     * Called when activity start-up is complete (after onStart() and onRestoreInstanceState(Bundle) have been called).
+     * Applications will generally not implement this method;
+     * it is intended for system classes to do final initialization after application code has run.
+     * @param savedInstanceState
+     */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);

@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.hankkin.compustrading.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -455,15 +457,20 @@ public class SwipeBackLayout extends FrameLayout {
         TypedArray a = activity.getTheme().obtainStyledAttributes(new int[]{
                 android.R.attr.windowBackground
         });
-        int background = a.getResourceId(0, 0);
+        int background = a.getResourceId(0, 0);//获取index=0的，找不到就返回0
         a.recycle();
-
+        // 在DecorView下增加SwipeBackLayout（FragmentLayout）
+        // A ViewGroup is a special view that can contain other views (called children.)
         ViewGroup decor = (ViewGroup) activity.getWindow().getDecorView();
+        // 拿到第一个子view-decorChild
         ViewGroup decorChild = (ViewGroup) decor.getChildAt(0);
         decorChild.setBackgroundResource(background);
+        // 删除子view-decorChild
         decor.removeView(decorChild);
+        // 把子view-decorChild添加到SwipeBackLayout（FragmentLayout）下
         addView(decorChild);
         setContentView(decorChild);
+        // 把SwipeBackLayout（FragmentLayout）添加到DecorView下
         decor.addView(this);
     }
 

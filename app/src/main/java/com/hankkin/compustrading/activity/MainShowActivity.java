@@ -272,7 +272,7 @@ public class MainShowActivity extends BaseActivity {
                 categories.addAll(categoryList);
                 queryProductsHttp();
             }
-            else {
+            else { // 这里要开开子线程处理，否则丢帧
                 queryCategory();
             }
         }
@@ -298,6 +298,7 @@ public class MainShowActivity extends BaseActivity {
                     for (Product p : list) {
                         data.add(p);
                     }
+                    // 这里要开线程，否则丢帧？
                     Message msg = new Message();
                     msg.what = 0;
                     msg.obj = data;
