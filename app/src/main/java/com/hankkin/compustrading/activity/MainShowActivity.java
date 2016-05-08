@@ -102,6 +102,7 @@ public class MainShowActivity extends BaseActivity {
     FloatingActionsMenu floatingActionsMenu;
     public static MainShowActivity instance;
 
+    public static final int UPDATE_VIEWPAGE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,12 +112,12 @@ public class MainShowActivity extends BaseActivity {
         BmobUpdateAgent.update(this);
         ButterKnife.bind(this);
         init();
-
+        // 子线程中更新UI
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                if (msg.what == 0) {
+                if (msg.what == UPDATE_VIEWPAGE) {
                     for (int i = 0; i < categories.size(); i++) {
                         CateDetailFragment fragment = new CateDetailFragment();
                         fragment.setFab(floatingActionsMenu);
@@ -143,7 +144,6 @@ public class MainShowActivity extends BaseActivity {
      * by Hankkin at:2015-11-29 19:29:52
      */
     private void init() {
-
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         drawerToggle = new ActionBarDrawerToggle(MainShowActivity.this, drawerLayout, R.string.hello_world, R.string.hello_world);
@@ -185,6 +185,7 @@ public class MainShowActivity extends BaseActivity {
         fbWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 是否要在子线程里面获取person?
                 Person person = BmobUser.getCurrentUser(MainShowActivity.this, Person.class);
                 if (person != null) {
                     fragments.get(pager.getCurrentItem()).hideFab();
@@ -208,34 +209,9 @@ public class MainShowActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-
+        //根据是否登录来显示抽屉菜单的显示项目
         person = getCurrentPerson(MainShowActivity.this);
-        if (person != null) {
-            rvBuy.setVisibility(View.VISIBLE);
-            rvSale.setVisibility(View.VISIBLE);
-            rvQQ.setVisibility(View.GONE);
-            rvSina.setVisibility(View.GONE);
-            if (!TextUtils.isEmpty(person.getUser_icon())) {
-                ImageLoader.getInstance().displayImage(person.getUser_icon(), rvUser);
-            }
-            tvPerson.setText("个人中心");
-            if (!TextUtils.isEmpty(person.getNickname())) {
-                tvName.setText(person.getNickname());
-            } else {
-                tvName.setText("用户" + person.getUsername().substring(0, 3));
-            }
-            tvShow.setText("我的");
-        } else {
-            rvUser.setBackground(getResources().getDrawable(R.drawable.defaut));
-            tvPerson.setText("登录或注册");
-            tvName.setText("");
-            rvBuy.setVisibility(View.GONE);
-            rvSale.setVisibility(View.GONE);
-            rvQQ.setVisibility(View.VISIBLE);
-            rvSina.setVisibility(View.VISIBLE);
-            tvShow.setText("其他登录方式");
-        }
-
+        displayMenuByLoginState(person);
 
         rvLogReg.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
@@ -270,9 +246,15 @@ public class MainShowActivity extends BaseActivity {
         if (categoryList!=null){
             if (categoryList.size()>0){
                 categories.addAll(categoryList);
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        queryProductsHttp();
+//                    }
+//                });
                 queryProductsHttp();
             }
-            else { // 这里要开开子线程处理，否则丢帧
+            else {
                 queryCategory();
             }
         }
@@ -294,21 +276,21 @@ public class MainShowActivity extends BaseActivity {
             public void onSuccess(List<Product> list) {
                 if (list != null && list.size() > 0) {
                     // javabean collect
-                    List<Product> data = new ArrayList<Product>();
+                    List<Product> mProductList = new ArrayList<Product>();
                     for (Product p : list) {
-                        data.add(p);
+                        mProductList.add(p);
                     }
-                    // 这里要开线程，否则丢帧？
+                    // 子线程中不能更新UI
                     Message msg = new Message();
-                    msg.what = 0;
-                    msg.obj = data;
+                    msg.what = UPDATE_VIEWPAGE;
+                    msg.obj = mProductList;
                     handler.sendMessage(msg);
                 }
             }
 
             @Override
             public void onError(int i, String s) {
-
+                HankkinUtils.showLToast(MainShowActivity.this, s);
             }
         });
     }
@@ -394,5 +376,39 @@ public class MainShowActivity extends BaseActivity {
             }
         });
     }
+    //登录后，跳转到mainshowactivity，抽屉式菜单还是显示登录注册 dts
+    @Override
+    protected void onResume() {
+        super.onResume();
+        person = getCurrentPerson(MainShowActivity.this);
+        displayMenuByLoginState(person);
+    }
 
+    private void displayMenuByLoginState(Person person) {
+        if (person != null) {
+            rvBuy.setVisibility(View.VISIBLE);
+            rvSale.setVisibility(View.VISIBLE);
+            rvQQ.setVisibility(View.GONE);
+            rvSina.setVisibility(View.GONE);
+            if (!TextUtils.isEmpty(person.getUser_icon())) {
+                ImageLoader.getInstance().displayImage(person.getUser_icon(), rvUser);
+            }
+            tvPerson.setText("个人中心");
+            if (!TextUtils.isEmpty(person.getNickname())) {
+                tvName.setText(person.getNickname());
+            } else {
+                tvName.setText("用户" + person.getUsername().substring(0, 3));
+            }
+            tvShow.setText("我的");
+        } else {
+            rvUser.setBackground(getResources().getDrawable(R.drawable.defaut));
+            tvPerson.setText("登录或注册");
+            tvName.setText("");
+            rvBuy.setVisibility(View.GONE);
+            rvSale.setVisibility(View.GONE);
+            rvQQ.setVisibility(View.VISIBLE);
+            rvSina.setVisibility(View.VISIBLE);
+            tvShow.setText("其他登录方式");
+        }
+    }
 }

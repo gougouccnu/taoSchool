@@ -106,7 +106,7 @@ public class SplasActivity extends BaseActivity {
     }
 
     /**
-     * category init
+     * category init,为构造初始数据用
      */
     private void categoryInit(){
         List<BmobObject> categorys = new ArrayList<BmobObject>();
@@ -128,7 +128,7 @@ public class SplasActivity extends BaseActivity {
         });
     }
     /**
-     * product init
+     * product init，为构造初始数据用
      */
     private void productInit(){
         Product productObj = new Product(0,"手机","999", "八成新小米4转让", "18926418053",0);

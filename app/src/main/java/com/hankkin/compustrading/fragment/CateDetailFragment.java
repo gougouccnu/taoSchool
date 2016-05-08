@@ -130,7 +130,7 @@ public class CateDetailFragment extends Fragment implements SwipeRefreshLayout.O
     }
 
     /**
-     * 根据商品Id查询商品
+     * 根据category Id查询商品
      * by Hankkin at:2015-12-19 23:19:41
      * @param cid
      */
