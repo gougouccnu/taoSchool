@@ -15,6 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.astuetz.PagerSlidingTabStrip;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.hankkin.compustrading.R;
 import com.hankkin.compustrading.Utils.HankkinUtils;
 import com.hankkin.compustrading.adapter.CategoryFragmentAdapter;
@@ -22,11 +25,8 @@ import com.hankkin.compustrading.fragment.CateDetailFragment;
 import com.hankkin.compustrading.model.Category;
 import com.hankkin.compustrading.model.Person;
 import com.hankkin.compustrading.model.Product;
-import com.hankkin.compustrading.view.PagerSlidingTabStrip;
 import com.hankkin.compustrading.view.RippleView;
 import com.hankkin.compustrading.view.RoundedImageView;
-import com.hankkin.compustrading.view.floatbutton.FloatingActionButton;
-import com.hankkin.compustrading.view.floatbutton.FloatingActionsMenu;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.Serializable;
@@ -39,6 +39,9 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
+
+//import com.hankkin.compustrading.view.floatbutton.FloatingActionButton;
+//import com.hankkin.compustrading.view.floatbutton.FloatingActionsMenu;
 
 
 public class MainShowActivity extends BaseActivity {

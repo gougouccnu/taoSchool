@@ -1,12 +1,12 @@
 package com.hankkin.compustrading.fragment;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +14,13 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.hankkin.compustrading.R;
-import com.hankkin.compustrading.ScrollDirectionListener;
 import com.hankkin.compustrading.Utils.HankkinUtils;
 import com.hankkin.compustrading.activity.ProdectDetailActivity;
 import com.hankkin.compustrading.adapter.ProductAdapter;
 import com.hankkin.compustrading.model.Product;
 import com.hankkin.compustrading.view.RefreshLayout;
-import com.hankkin.compustrading.view.floatbutton.FloatingActionsMenu;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -33,6 +32,8 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.listener.FindListener;
+
+//import com.hankkin.compustrading.view.floatbutton.FloatingActionsMenu;
 
 /**
  * Created by Hankkin on 15/11/29.
@@ -103,30 +104,61 @@ public class CateDetailFragment extends Fragment implements SwipeRefreshLayout.O
                 startActivity(intent);
             }
         });
+        lvProduct.setOnScrollListener(new AbsListView.OnScrollListener() {
 
-        if (fab!=null){
-            fab.attachToListView(lvProduct, new ScrollDirectionListener() {
-                @Override
-                public void onScrollDown() {
-                    Log.d("ListViewFragment", "onScrollDown()");
-                }
+            private int mLastFirstVisibleItem;
 
-                @Override
-                public void onScrollUp() {
-                    Log.d("ListViewFragment", "onScrollUp()");
-                }
-            }, new AbsListView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(AbsListView view, int scrollState) {
-                    Log.d("ListViewFragment", "onScrollStateChanged()");
-                }
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+                //final ListView lv = getListView();
+            }
 
-                @Override
-                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    Log.d("ListViewFragment", "onScroll()");
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int i1, int i2) {
+                if (mLastFirstVisibleItem < firstVisibleItem) {
+                    // fab fadout
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(fab,
+                            "translationY",
+                            400F);
+                    animator.setDuration(500);
+                    animator.start();
                 }
-            });
-        }
+                if (mLastFirstVisibleItem > firstVisibleItem) {
+                    // fab fadin
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(fab,
+                            "translationY",
+                            200F, 0);
+                    animator.setDuration(500);
+                    animator.start();
+
+                }
+                mLastFirstVisibleItem = firstVisibleItem;
+            }
+        });
+
+//        if (fab!=null){
+//            fab.attachToListView(lvProduct, new ScrollDirectionListener() {
+//                @Override
+//                public void onScrollDown() {
+//                    Log.d("ListViewFragment", "onScrollDown()");
+//                }
+//
+//                @Override
+//                public void onScrollUp() {
+//                    Log.d("ListViewFragment", "onScrollUp()");
+//                }
+//            }, new AbsListView.OnScrollListener() {
+//                @Override
+//                public void onScrollStateChanged(AbsListView view, int scrollState) {
+//                    Log.d("ListViewFragment", "onScrollStateChanged()");
+//                }
+//
+//                @Override
+//                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+//                    Log.d("ListViewFragment", "onScroll()");
+//                }
+//            });
+//        }
     }
 
     /**

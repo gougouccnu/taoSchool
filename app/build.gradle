@@ -20,18 +20,25 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile rootProject.ext.dependencies["appcompat-v7"]
     compile files('libs/BmobSDK_V3.4.5_1111.jar')
     compile files('libs/okio-1.4.0.jar')
     compile rootProject.ext.dependencies["support-v4"]
-    compile 'com.github.manuelpeinado.fadingactionbar:fadingactionbar-abc:3.1.2'
+    //compile 'com.github.manuelpeinado.fadingactionbar:fadingactionbar-abc:3.1.2'
     compile 'com.pnikosis:materialish-progress:1.7'
     compile 'me.drakeet.materialdialog:library:1.2.8'
-    compile 'com.jakewharton:butterknife:7.0.1'
+    //compile 'com.jakewharton:butterknife:7.0.1'
+    compile rootProject.ext.dependencies["butterknife"]
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile 'com.weiwangcn.betterspinner:library:1.1.0'
+    //compile 'com.weiwangcn.betterspinner:library:1.1.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile rootProject.ext.dependencies["design"]
+    //compile 'me.imid.swipebacklayout.lib:library:1.0.0'
+    //compile project(':library')
+    //compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile rootProject.ext.dependencies["PagerSlidingTabStrip"]
+    compile rootProject.ext.dependencies["betterspinner"]
+    compile 'com.getbase:floatingactionbutton:1.10.1'
 }

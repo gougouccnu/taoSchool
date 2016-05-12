@@ -16,7 +16,7 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.hankkin.compustrading.view.PagerSlidingTabStrip
+    <com.astuetz.PagerSlidingTabStrip
         android:layout_below="@+id/rl_title"
         android:id="@+id/tab"
         app:pstsShouldExpand="false"
@@ -36,7 +36,7 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    <com.hankkin.compustrading.view.floatbutton.FloatingActionsMenu
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         android:layout_marginRight="@dimen/smaller_space"
         android:layout_marginEnd="@dimen/smaller_space">
 
-        <com.hankkin.compustrading.view.floatbutton.FloatingActionButton
+        <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fb_update"
             android:src="@drawable/update"
             fab:fab_labelStyle="@style/menu_labels_style"
@@ -60,15 +60,16 @@
             fab:fab_colorNormal="@color/theme_color"
             fab:fab_colorPressed="@color/theme_color_tab"/>
 
-        <com.hankkin.compustrading.view.floatbutton.FloatingActionButton
+        <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fb_new"
             fab:paddingEnd="@dimen/small_space"
             android:src="@drawable/edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/theme_color"
-            fab:fab_colorPressed="@color/theme_color_tab"/>
-        <com.hankkin.compustrading.view.floatbutton.FloatingActionButton
+            fab:fab_colorPressed="@color/theme_color_tab"
+            android:adjustViewBounds="false" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fb_person"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +77,7 @@
             fab:fab_colorNormal="@color/theme_color"
             fab:fab_colorPressed="@color/theme_color_tab"/>
 
-    </com.hankkin.compustrading.view.floatbutton.FloatingActionsMenu>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </RelativeLayout>
 
